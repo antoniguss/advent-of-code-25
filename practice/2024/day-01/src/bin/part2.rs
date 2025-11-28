@@ -22,7 +22,8 @@ fn part2(input: &str) -> u32 {
 
     let mut counts: HashMap<i32, i32> = HashMap::new();
 
-    for i in 0..values2.len() {
+    fsudo softwareupdate -aiR
+or i in 0..values2.len() {
         *counts.entry(values2[i]).or_insert(0) += 1;
     }
     let mut sum = 0;
