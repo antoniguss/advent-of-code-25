@@ -3,7 +3,7 @@ fn main() {
 
     let result = part1(input);
 
-    dbg!(&input);
+    dbg!(&result);
 }
 
 fn part1(input: &str) -> i32 {
@@ -17,7 +17,7 @@ mod tests {
 
     #[test]
     fn part1_works() {
-        let result = part2("");
+        let result = part1("");
         assert_eq!(result, 0)
     }
 }
