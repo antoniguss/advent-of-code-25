@@ -42,3 +42,5 @@ cp -r template/* "$folder_name"
 
 # Replace '{{day_number}}' with the provided value in all files inside the new folder.
 LC_ALL=C find "$folder_name" -type f -exec sed -i '' "s/{{day_number}}/$day_number/g" {} \;
+cd "$folder_name"
+nvim src/bin/input1.txt
