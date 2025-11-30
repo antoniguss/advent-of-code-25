@@ -9,12 +9,10 @@ fn main() {
 }
 
 fn part2(input: &str) -> i32 {
-    let input: String = input.lines().collect();
-
     let mul_re = Regex::new(r"mul\(([0-9]+),([0-9]+)\)|do\(\)|don't\(\)").unwrap();
     let mut result = 0;
     let mut is_enabled = true;
-    mul_re.captures_iter(&input).for_each(|c| match &c[0] {
+    mul_re.captures_iter(input).for_each(|c| match &c[0] {
         "do()" => {
             is_enabled = true;
         }
@@ -25,7 +23,6 @@ fn part2(input: &str) -> i32 {
             if is_enabled {
                 let a = c[1].parse::<i32>().unwrap();
                 let b = c[2].parse::<i32>().unwrap();
-
                 result += a * b;
             }
         }

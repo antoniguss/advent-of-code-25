@@ -9,21 +9,16 @@ fn main() {
 }
 
 fn part1(input: &str) -> i32 {
-    let input: String = input.lines().collect();
-
     let mul_re = Regex::new(r"mul\(([0-9]+),([0-9]+)\)").unwrap();
-    let mut result = 0;
     mul_re
-        .captures_iter(&input)
-        .map(|c| c.extract())
-        .for_each(|(_, [a, b])| {
+        .captures_iter(input)
+        .map(|c| {
+            let (_, [a, b]) = c.extract();
             let a = a.parse::<i32>().unwrap();
             let b = b.parse::<i32>().unwrap();
-
-            result += a * b;
-        });
-
-    result
+            a * b
+        })
+        .sum()
 }
 
 #[cfg(test)]
