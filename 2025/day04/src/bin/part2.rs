@@ -7,9 +7,6 @@ fn main() {
 }
 
 fn part2(input: &str) -> i32 {
-    println!("{}", input);
-    println!();
-
     let mut grid: Vec<Vec<bool>> = input
         .lines()
         .map(|l| {
@@ -46,33 +43,29 @@ fn part2(input: &str) -> i32 {
     result as i32
 }
 
-fn get_accessible(grid: &Vec<Vec<bool>>) -> Vec<Vec<bool>> {
+fn get_accessible(grid: &[Vec<bool>]) -> Vec<Vec<bool>> {
     let mut accessible: Vec<Vec<bool>> = vec![vec![false; grid[0].len()]; grid.len()];
     for row in 0..grid.len() {
-        '_cols: for col in 0..grid[row].len() {
+        for col in 0..grid[row].len() {
             if !grid[row][col] {
                 continue;
             }
 
-            let mut count = 0;
-
-            for d_row in -1..=1 {
-                for d_col in -1..=1 {
-                    if d_row == 0 && d_col == 0 {
-                        continue;
-                    }
-
-                    let new_row = row as i32 + d_row;
-                    let new_col = col as i32 + d_col;
-
-                    if let Some(row_vec) = grid.get(new_row as usize)
-                        && let Some(&value) = row_vec.get(new_col as usize)
-                        && value
-                    {
-                        count += 1;
-                    }
-                }
-            }
+            let count = (-1..=1)
+                .flat_map(|d_row| {
+                    (-1..=1).filter_map(move |d_col| {
+                        if d_row == 0 && d_col == 0 {
+                            return None;
+                        }
+                        let new_row = (row as i32 + d_row) as usize;
+                        let new_col = (col as i32 + d_col) as usize;
+                        grid.get(new_row)
+                            .and_then(|r| r.get(new_col))
+                            .filter(|&&v| v)
+                            .map(|_| 1)
+                    })
+                })
+                .sum::<usize>();
 
             accessible[row][col] = count < 4;
         }
