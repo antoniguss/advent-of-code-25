@@ -17,7 +17,7 @@ fn part1(input: &str) -> i64 {
 
     tiles.sort_by_key(|t| t.0);
 
-    let pairs: Vec<((i64, i64), (i64, i64))> = tiles
+    tiles
         .iter()
         .enumerate()
         .flat_map(|(i, t1)| {
@@ -27,11 +27,6 @@ fn part1(input: &str) -> i64 {
                 //.filter(|t2| t2.0 >= t1.0 && t2.1 >= t1.1)
                 .map(move |t2| (*t1, *t2))
         })
-        .collect();
-    //dbg!(&pairs);
-
-    pairs
-        .iter()
         .map(|(t1, t2)| (t2.0.abs_diff(t1.0) + 1) * (t2.1.abs_diff(t1.1) + 1))
         .max()
         .unwrap() as i64
